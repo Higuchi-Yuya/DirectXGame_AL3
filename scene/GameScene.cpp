@@ -38,7 +38,6 @@ void GameScene::Initialize() {
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
-
 }
 
 void GameScene::Update() { 
