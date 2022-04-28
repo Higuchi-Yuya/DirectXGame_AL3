@@ -50,6 +50,8 @@ void WorldTransform::UpdateMatrix() {
 	matWorld_ *= matScale;          // ワールド行列にスケーリングを反映
 	matWorld_ *= matRot;            // ワールド行列に回転を反映
 	matWorld_ *= matTrans;          // ワールド行列に平行移動を反映
+}
+
 
 	// 親行列の指定がある場合は、掛け算する
 	if (parent_) {
@@ -58,4 +60,3 @@ void WorldTransform::UpdateMatrix() {
 
 	// 定数バッファに書き込み
 	constMap->matWorld = matWorld_;
-}

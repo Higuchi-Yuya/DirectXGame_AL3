@@ -25,16 +25,38 @@ void GameScene::Initialize() {
 	//3Dモデルの生成
 	model_ = Model::Create();
 
-	// X,Y,Z方向のスケーリングを設定
-	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
-	// X,Y,Z軸周りの回転角を設定
-	worldTransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f};
-	// X,Y,Z軸周りの平行移動を設定
-	worldTransform_.translation_ = {10.0f, 10.0f, 10.0f};
+	float x_transletion_1 = -50;
+	float x_transletion_2 = -50;
 
-	//ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
+	for (int i = 0; i < 50; i++) {
 
+		// X,Y,Z方向のスケーリングを設定
+		worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
+		// X,Y,Z軸周りの回転角を設定
+		worldTransform_[i].rotation_ = {XM_PI / 100.5f, 0.0f, 0.0f};
+		// X,Y,Z軸周りの平行移動を設定
+		worldTransform_[i].translation_ = {x_transletion_1, 19.5f, 0.0f};
+
+		//ワールドトランスフォームの初期化
+		worldTransform_[i].Initialize();
+
+		x_transletion_1+=10;
+
+	}
+	for (int i = 50; i < 100; i++) {
+
+		// X,Y,Z方向のスケーリングを設定
+		worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
+		// X,Y,Z軸周りの回転角を設定
+		worldTransform_[i].rotation_ = {XM_PI / 100.5f, 0.0f, 0.0f};
+		// X,Y,Z軸周りの平行移動を設定
+		worldTransform_[i].translation_ = {x_transletion_2, -19.5f, 0.0f};
+
+		//ワールドトランスフォームの初期化
+		worldTransform_[i].Initialize();
+
+		x_transletion_2 += 10;
+	}
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
@@ -42,21 +64,21 @@ void GameScene::Initialize() {
 
 void GameScene::Update() { 
 
-//デバッグテキストの表示
-	debugText_->SetPos(50, 50);
-	debugText_->Printf(
-  "translation:(%f,%f,%f)", worldTransform_.translation_.x, worldTransform_.translation_.y,
-  worldTransform_.translation_.z);
-
-	debugText_->SetPos(50, 70);
-	debugText_->Printf(
-	  "rotation:(%f,%f,%f)", worldTransform_.rotation_.x, worldTransform_.rotation_.y,
-	  worldTransform_.rotation_.z);
-
-	debugText_->SetPos(50, 90);
-	debugText_->Printf(
-	  "scale:(%f,%f,%f)", worldTransform_.scale_.x, worldTransform_.scale_.y,
-	  worldTransform_.scale_.z);
+////デバッグテキストの表示
+//	debugText_->SetPos(50, 50);
+//	debugText_->Printf(
+//  "translation:(%f,%f,%f)", worldTransform_.translation_.x, worldTransform_.translation_.y,
+//  worldTransform_.translation_.z);
+//
+//	debugText_->SetPos(50, 70);
+//	debugText_->Printf(
+//	  "rotation:(%f,%f,%f)", worldTransform_.rotation_.x, worldTransform_.rotation_.y,
+//	  worldTransform_.rotation_.z);
+//
+//	debugText_->SetPos(50, 90);
+//	debugText_->Printf(
+//	  "scale:(%f,%f,%f)", worldTransform_.scale_.x, worldTransform_.scale_.y,
+//	  worldTransform_.scale_.z);
 }
 
 void GameScene::Draw() {
@@ -87,7 +109,10 @@ void GameScene::Draw() {
 	/// </summary>
 	/// ----------------------------------------------------------------
 	//3Dモデル描画
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	for (int i=0;i<100;i++) {
+		model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
+	}
+	
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
