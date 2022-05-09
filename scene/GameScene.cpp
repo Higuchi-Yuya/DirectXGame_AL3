@@ -25,38 +25,39 @@ void GameScene::Initialize() {
 	//3Dモデルの生成
 	model_ = Model::Create();
 
-	float x_transletion_1 = -50;
-	float x_transletion_2 = -50;
+	float x_transletion_1 = -10.0f;
+	float y_transletion_1 = 10.0f;
+	float z_transletion_1 = 0.0f;
 
-	for (int i = 0; i < 50; i++) {
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 9; j++) {
+			for (int k = 0; k < 9; k++) {
+				// X,Y,Z方向のスケーリングを設定
 
-		// X,Y,Z方向のスケーリングを設定
-		worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
-		// X,Y,Z軸周りの回転角を設定
-		worldTransform_[i].rotation_ = {XM_PI / 100.5f, 0.0f, 0.0f};
-		// X,Y,Z軸周りの平行移動を設定
-		worldTransform_[i].translation_ = {x_transletion_1, 19.5f, 0.0f};
+				worldTransform_[i][j][k].scale_ = {1.0f, 1.0f, 1.0f};
 
-		//ワールドトランスフォームの初期化
-		worldTransform_[i].Initialize();
+				/*if (i % 2 == 1 && j % 2 == 1)
+				{
+					worldTransform_[i][j].scale_ = { 0.0f, 0.0f, 0.0f };
+				}*/
+				// X,Y,Z軸周りの回転角を設定
+				worldTransform_[i][j][k].rotation_ = {XM_PI / 100.5f, 0.0f, 0.0f};
 
-		x_transletion_1+=10;
+				// X,Y,Z軸周りの平行移動を設定
+				worldTransform_[i][j][k].translation_ = {x_transletion_1, y_transletion_1, z_transletion_1};
 
+				//ワールドトランスフォームの初期化
+				worldTransform_[i][j][k].Initialize();
+
+				z_transletion_1 += 3;
+			}
+			z_transletion_1 = 0.0f;
+			x_transletion_1 += 3;
+		}
+		x_transletion_1 = -10.0f;
+		y_transletion_1 -= 3;
 	}
-	for (int i = 50; i < 100; i++) {
 
-		// X,Y,Z方向のスケーリングを設定
-		worldTransform_[i].scale_ = {5.0f, 5.0f, 5.0f};
-		// X,Y,Z軸周りの回転角を設定
-		worldTransform_[i].rotation_ = {XM_PI / 100.5f, 0.0f, 0.0f};
-		// X,Y,Z軸周りの平行移動を設定
-		worldTransform_[i].translation_ = {x_transletion_2, -19.5f, 0.0f};
-
-		//ワールドトランスフォームの初期化
-		worldTransform_[i].Initialize();
-
-		x_transletion_2 += 10;
-	}
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 
@@ -109,8 +110,12 @@ void GameScene::Draw() {
 	/// </summary>
 	/// ----------------------------------------------------------------
 	//3Dモデル描画
-	for (int i=0;i<100;i++) {
-		model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
+	for (int i=0;i<9;i++) {
+		for (int j = 0; j < 9; j++) {
+			for (int k = 0; k < 9; k++) {
+				model_->Draw(worldTransform_[i][j][k], viewProjection_, textureHandle_);
+			}
+		}
 	}
 	
 

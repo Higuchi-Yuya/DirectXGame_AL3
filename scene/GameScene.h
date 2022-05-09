@@ -58,7 +58,7 @@ class GameScene {
 	//Sprite* sprite_;
 
 	//ワールドトランスフォーム
-	WorldTransform worldTransform_[100];
+	WorldTransform worldTransform_[9][9][9];
 
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
